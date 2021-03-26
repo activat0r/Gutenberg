@@ -81,6 +81,7 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId == EditorInfo.IME_ACTION_GO || actionId==EditorInfo.IME_ACTION_SEARCH){
+                    loading=true;
                     formUrl(category,v.getText().toString());
                     searchBar.clearFocus();
                     return true;
@@ -99,7 +100,7 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
                 int totalItems = layoutManager.getItemCount();
                 int lastViewablePosition = layoutManager.findLastVisibleItemPosition();
 
-                if(lastViewablePosition == totalItems-1 && !nextPageUrl.equals("") && !loading){
+                if((totalItems - lastViewablePosition-1 < layoutManager.getSpanCount()*2) && !nextPageUrl.equals("") && !loading){
                     loading=true;
                     getBooks(nextPageUrl);
                 }
