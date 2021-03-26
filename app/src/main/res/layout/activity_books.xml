@@ -20,12 +20,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
-                android:id="@+id/books_back"
+                android:id="@+id/books_image_back"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_back"></ImageView>
             <TextView
-                android:id="@+id/books_category"
+                android:id="@+id/books_textview_category"
                 android:paddingLeft="16dp"
                 android:layout_gravity="center"
                 android:textColor="@color/purple"
@@ -46,15 +46,14 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/books_search_layout"
+        android:id="@+id/books_textInputLayout_search"
         app:layout_constraintTop_toBottomOf="@id/books_appbar"
         app:endIconDrawable="@drawable/ic_cancel"
         app:startIconDrawable="@drawable/ic_search"
-        app:endIconMode="clear_text"
-        >
+        app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:background="@drawable/searchbox_background"
+            android:background="@drawable/background_searchbox"
             android:hint="Search"
             android:inputType="text"
             android:lines="1"
@@ -62,20 +61,20 @@
             android:textSize="16sp"
             android:textColor="@color/darkGrey"
             android:fontFamily="@font/montserrat_regular"
-            android:id="@+id/books_search"
+            android:id="@+id/books_editTextView_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/books_recyclerView"
+        android:id="@+id/books_recyclerView_bookshelf"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="@color/lightPurple"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/books_search_layout"
+        app:layout_constraintTop_toBottomOf="@id/books_textInputLayout_search"
         app:layout_constraintStart_toStartOf="parent"></androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

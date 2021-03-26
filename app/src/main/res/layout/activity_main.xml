@@ -10,10 +10,10 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/header_background"
+        android:id="@+id/main_header_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/genreList"
+        app:layout_constraintBottom_toTopOf="@id/main_listView_genre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,49 +22,47 @@
         <TextView
             android:layout_marginTop="30dp"
             android:padding="16dp"
-            android:id="@+id/textview_header"
+            android:id="@+id/main_textview_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_semibold"
             android:text="Gutenberg Project"
             android:textColor="@color/purple"
             android:textSize="48sp"
-            app:layout_constraintBottom_toTopOf="@id/textview_header2"
+            app:layout_constraintBottom_toTopOf="@id/main_textview_header2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/header_background"></TextView>
+            app:layout_constraintTop_toTopOf="@id/main_header_background"></TextView>
 
 
         <TextView
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:id="@+id/textview_header2"
+            android:id="@+id/main_textview_header2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_regular"
             android:text="@string/header_part_two"
             android:textColor="@color/darkGrey"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/header_background"
+            app:layout_constraintBottom_toBottomOf="@id/main_header_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textview_header"></TextView>
+            app:layout_constraintTop_toBottomOf="@id/main_textview_header"></TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ListView
         android:layout_marginTop="10dp"
-        android:id="@+id/genreList"
+        android:id="@+id/main_listView_genre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_background"
+        app:layout_constraintTop_toBottomOf="@id/main_header_background"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:divider="@color/lightPurple"
-        android:dividerHeight="16dp"
-        >
-
+        android:dividerHeight="16dp">
     </ListView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

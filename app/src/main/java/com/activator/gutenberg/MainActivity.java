@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
-        categoryListview = findViewById(R.id.genreList);
+        categoryListview = findViewById(R.id.main_listView_genre);
         categoryList = new ArrayList<>();
 
         categoryList.add(new CategoryModel(ContextCompat.getDrawable(context,R.drawable.ic_fiction),"Fiction"));

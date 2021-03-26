@@ -1,5 +1,6 @@
 package com.activator.gutenberg;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -7,24 +8,19 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
@@ -35,13 +31,10 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 public class BooksActivity extends AppCompatActivity implements BookAdapter.OnItemClickListener, BookAdapter.OnLongClickListener{
     private RecyclerView booksRecyclerView;
@@ -53,16 +46,18 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
     private EditText searchBar;
     private String nextPageUrl;
     private Context context;
+    private boolean loading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_books);
 
-        booksRecyclerView = findViewById(R.id.books_recyclerView);
+        booksRecyclerView = findViewById(R.id.books_recyclerView_bookshelf);
         nextPageUrl = "";
-        back = findViewById(R.id.books_back);
-        title = findViewById(R.id.books_category);
-        searchBar = findViewById(R.id.books_search);
+        back = findViewById(R.id.books_image_back);
+        title = findViewById(R.id.books_textview_category);
+        searchBar = findViewById(R.id.books_editTextView_search);
 
         booklist = new ArrayList<>();
         booksRecyclerView.setLayoutManager(new GridLayoutManager(this,3));
@@ -80,14 +75,34 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
             }
         });
 
+
+
         searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == EditorInfo.IME_ACTION_GO){
+                if(actionId == EditorInfo.IME_ACTION_GO || actionId==EditorInfo.IME_ACTION_SEARCH){
                     formUrl(category,v.getText().toString());
+                    searchBar.clearFocus();
                     return true;
                 }
                 return false;
+            }
+        });
+
+        GridLayoutManager layoutManager = (GridLayoutManager) booksRecyclerView.getLayoutManager();
+        loading = false;
+        booksRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                int totalItems = layoutManager.getItemCount();
+                int lastViewablePosition = layoutManager.findLastVisibleItemPosition();
+
+                if(lastViewablePosition == totalItems-1 && !nextPageUrl.equals("") && !loading){
+                    loading=true;
+                    getBooks(nextPageUrl);
+                }
             }
         });
 
@@ -225,6 +240,7 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
 
         Objects.requireNonNull(booksRecyclerView.getAdapter()).notifyDataSetChanged();
         Log.d("books", "generateBookList: "+booksRecyclerView.getAdapter().getItemCount());
+        loading = false;
     }
 
 

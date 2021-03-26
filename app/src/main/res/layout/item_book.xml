@@ -34,8 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:fontFamily="@font/montserrat_regular"
         android:textSize="12sp"
-        android:textColor="@color/grey"
-        >
+        android:textColor="@color/grey">
     </TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
