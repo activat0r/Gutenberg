@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:id="@+id/category_btn"
+
+    android:background="@drawable/shadow" >
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="27dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_adventure"
+        android:id="@+id/cat_icon"></androidx.appcompat.widget.AppCompatImageView>
+
+    <TextView
+        android:id="@+id/cat_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="10"
+        android:textAllCaps="true"
+        android:fontFamily="@font/montserrat_regular"
+        android:paddingLeft="16dp"
+        android:text="ADVENTURE"
+        android:textColor="@color/darkGrey"
+
+        android:textSize="20sp"></TextView>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/cat_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_next"></androidx.appcompat.widget.AppCompatImageView>
+</LinearLayout>
