@@ -1,9 +1,13 @@
 package com.activator.gutenberg;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,6 +52,7 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
     private ImageView back;
     private EditText searchBar;
     private String nextPageUrl;
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +95,6 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
         booklist.clear();
         bookAdapter.notifyDataSetChanged();
         formUrl(category);
-
     }
 
 
@@ -98,12 +102,12 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
     @Override
     protected void onStart() {
         super.onStart();
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        context = this;
     }
 
     private void formUrl(String category) {
@@ -137,7 +141,12 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
                 public void onErrorResponse(VolleyError error) {
                     //todo error dialog
                     Log.d("books",error.getMessage());
-
+                    new AlertDialog.Builder(context)
+                            .setTitle("Error")
+                            .setMessage("We are facing issues establishing connection to the server. Please try again later.")
+                            .setNeutralButton("Okay",null)
+                            .setIcon(ContextCompat.getDrawable(context,R.drawable.ic_error))
+                            .show();
                 }
             })
 
@@ -166,6 +175,14 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
             
             if(resp.has("next") && !resp.getString("next").equals("")){
                 nextPageUrl = resp.getString("next");
+            }
+            if(resp.getInt("count")==0){
+                new AlertDialog.Builder(context)
+                        .setTitle("No books found")
+                        .setMessage("We were unable to find any books for you. Please try later.")
+                        .setNeutralButton("Okay",null)
+                        .setIcon(ContextCompat.getDrawable(context,R.drawable.ic_error))
+                        .show();
             }
 
             for(int counter =0;counter<booksArray.length();counter++) {
@@ -198,7 +215,12 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            //todo dialog
+            new AlertDialog.Builder(context)
+                    .setTitle("Error")
+                    .setMessage("Something went wrong. Please try again later.")
+                    .setNeutralButton("Okay",null)
+                    .setIcon(ContextCompat.getDrawable(context,R.drawable.ic_error))
+                    .show();
         }
 
         Objects.requireNonNull(booksRecyclerView.getAdapter()).notifyDataSetChanged();
@@ -209,8 +231,20 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
     @Override
     public void onItemClick(int position) {
         Log.d("books","On Click");
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(booklist.get(position).getBookUrl()));
-        startActivity(browserIntent);
+
+        if(booklist.get(position).getBookUrl().equals("")){
+            new AlertDialog.Builder(context)
+                    .setTitle("Error")
+                    .setMessage("No viewable version available")
+                    .setNeutralButton("Okay",null)
+                    .setIcon(ContextCompat.getDrawable(context,R.drawable.ic_error))
+                    .show();
+        }
+        else{
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(booklist.get(position).getBookUrl()));
+            startActivity(browserIntent);
+        }
+
     }
 
     @Override
