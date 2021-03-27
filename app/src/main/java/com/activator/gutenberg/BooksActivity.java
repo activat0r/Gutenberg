@@ -218,12 +218,18 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
 
                 while (keys.hasNext()) {
                     String nextItem = keys.next();
-                    if (nextItem.contains("html"))
+                    if (nextItem.contains("html")) {
                         bookUrl = formats.getString(nextItem);
-                    else if (nextItem.contains("pdf"))
+                        break;
+                    }
+                    else if (nextItem.contains("pdf")) {
                         bookUrl = formats.getString(nextItem);
-                    else if (nextItem.contains("txt"))
+                        break;
+                    }
+                    else if (nextItem.contains("txt")) {
                         bookUrl = formats.getString(nextItem);
+                        break;
+                    }
                 }
 
                 booklist.add(new Book(name, author, imageUrl, bookUrl));
