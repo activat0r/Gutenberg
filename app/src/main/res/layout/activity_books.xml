@@ -20,10 +20,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
+                android:padding="8dp"
                 android:id="@+id/books_image_back"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_back"></ImageView>
+                android:src="@drawable/ic_back"
+                android:background="@drawable/ripple_mask_back"></ImageView>
             <TextView
                 android:id="@+id/books_textview_category"
                 android:paddingLeft="16dp"
@@ -69,12 +71,25 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/books_recyclerView_bookshelf"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/lightPurple"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:clickable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/books_progressBar"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/books_textInputLayout_search"
         app:layout_constraintStart_toStartOf="parent"></androidx.recyclerview.widget.RecyclerView>
 
+    <ProgressBar
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:indicatorColor="@color/grey"
+        android:id="@+id/books_progressBar"
+        android:indeterminate="true"
+        app:layout_constraintTop_toBottomOf="@id/books_recyclerView_bookshelf"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/books_recyclerView_bookshelf"
+        app:layout_constraintEnd_toEndOf="@id/books_recyclerView_bookshelf"></ProgressBar>
 </androidx.constraintlayout.widget.ConstraintLayout>

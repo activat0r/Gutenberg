@@ -12,4 +12,6 @@
     <color name="lightGrey">#F0F0F6</color>
     <color name="grey">#A0A0A0</color>
     <color name="darkGrey">#333333</color>
+    <color name="accentPurple">#C5A2F1</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

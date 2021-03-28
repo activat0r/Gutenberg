@@ -9,7 +9,7 @@
     android:orientation="horizontal"
     android:padding="10dp"
     android:id="@+id/category_btn"
-    android:background="@drawable/shadow_genre" >
+    android:background="@drawable/ripple_mask_genre" >
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="27dp"

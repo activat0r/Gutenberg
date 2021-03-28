@@ -11,6 +11,7 @@
     android:id="@+id/book_image"
     app:layout_constraintStart_toStartOf="parent"
     android:background="@drawable/shadow_book"
+    android:foreground="@drawable/ripple_mask_book"
     android:src="@color/lightGrey"
     ></ImageView>
 

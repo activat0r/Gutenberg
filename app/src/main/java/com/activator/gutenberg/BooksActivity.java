@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
     private String nextPageUrl;
     private Context context;
     private boolean loading;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,8 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
         bookAdapter = new BookAdapter(this,booklist);
         booksRecyclerView.setAdapter(bookAdapter);
         category = getIntent().getStringExtra("Category_Name");
+
+        progressBar = findViewById(R.id.books_progressBar);
 
         bookAdapter.setOnItemClickListener(this);
         bookAdapter.setLongClickListener(this);
@@ -141,6 +145,7 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
     }
 
     private void getBooks(String url){
+        progressBar.setVisibility(View.VISIBLE);
         Log.d("books","getBooks");
 
         com.android.volley.RequestQueue mRequestQueue = Volley.newRequestQueue(this);
@@ -189,9 +194,14 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
             JSONObject resp = new JSONObject(response);
             JSONArray booksArray = resp.getJSONArray("results");
             
-            if(resp.has("next") && !resp.getString("next").equals("")){
+            if(resp.has("next") && !resp.getString("next").equals("") && !resp.getString("next").equals("null")) {
                 nextPageUrl = resp.getString("next");
             }
+            else
+                nextPageUrl = "";
+
+                Log.d("books"," next Url = "+nextPageUrl);
+
             if(resp.getInt("count")==0){
                 new AlertDialog.Builder(context)
                         .setTitle("No books found")
@@ -248,6 +258,8 @@ public class BooksActivity extends AppCompatActivity implements BookAdapter.OnIt
         Objects.requireNonNull(booksRecyclerView.getAdapter()).notifyDataSetChanged();
         Log.d("books", "generateBookList: "+booksRecyclerView.getAdapter().getItemCount());
         loading = false;
+        booksRecyclerView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
     }
 
 
